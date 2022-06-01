@@ -10,10 +10,8 @@ const capitaliseNames = (inputArray) => {
 // ----------------------------------------------------
 
 const removeVowels = (inputArray) => {
-    const vowels = new RegExp('[aeiou]');
-    return inputArray.filter((letter) => {
-        return (! vowels.test(letter));
-    })
+    const vowels = new RegExp('[^aeiou]');
+    return inputArray.filter((letter) => vowels.test(letter));
 }
 
 // console.log(removeVowels(["w", "i", "l", "l"]));
@@ -21,8 +19,7 @@ const removeVowels = (inputArray) => {
 // ----------------------------------------------------
 
 const getAverage = (inputArray) => {
-    let sum = inputArray.reduce((a, b) => (a + b));
-    return (sum / inputArray.length);
+    return inputArray.reduce((a, b) => (a + b)) / inputArray.length;
 }
 
 // console.log(getAverage([2, 3, 4, 8, 23]));
@@ -39,13 +36,15 @@ const removeShorterWords = (inputArray, limit) => {
 
 const convertToCamelCase = (inputArray) => {
     return inputArray.map((element) => {
-        return (element.split(" ").map((word) => {
-            return (word[0].toUpperCase() + word.substring(1, word.length))
+        return (element.split(" ").map((word, index) => {
+            if (index == 0) {
+                return (word);
+            } else {
+                return (word[0].toUpperCase() + word.substring(1, word.length));
+            }
         }))
         .join("");
     })
-
-    // return inputArray.map((element) => (element.split(" ").map((word) => word[0].toUpperCase() + word.substring(1, word.length))).join(""))
 }
 
 // console.log(convertToCamelCase(["hello my", "good friend"]));
@@ -53,7 +52,7 @@ const convertToCamelCase = (inputArray) => {
 // ----------------------------------------------------
 
 const giveScrabbleScore = (inputArray) => {
-    return inputArray.map((object) => object.value).reduce((a, b) => (a + b));
+    return inputArray.reduce((total, currentObject) => (total + currentObject.value), 0);
 }
 
 // console.log(giveScrabbleScore([{ letter: "a", value: 1}, { letter: "k", value: 5}, { letter: "c", value: 3}]));
